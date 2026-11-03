@@ -1,72 +1,100 @@
 # Expense Tracker API
 
-A REST API built with **Python, FastAPI, SQLAlchemy and SQLite**. It lets a user record expenses, browse and filter them, edit or delete records, and view a monthly spending summary.
+A lightweight RESTful API for managing personal expenses, built with **Python, FastAPI, SQLAlchemy, and SQLite**.
 
-> Learning project: built for practising Python backend development and REST API fundamentals. It is not an authenticated production finance application.
+This project was developed as a hands-on backend learning project to practise API design, CRUD operations, data validation, database integration, filtering, pagination, aggregation, and automated testing.
+
+[![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Tests](https://img.shields.io/badge/Tests-3%20passed-brightgreen)](#run-tests)
+
+## Overview
+
+The API allows users to create and manage expense records, retrieve expenses with optional filters, and view a monthly spending summary. FastAPI provides interactive API documentation, while SQLAlchemy handles database operations and Pydantic validates request data.
+
+> **Project scope:** This is a learning project intended to demonstrate backend fundamentals. It is not a production-ready financial application and does not currently implement user authentication or multi-user data isolation.
 
 ## Features
 
-- Create, list, view, update and delete expenses (CRUD)
-- Validate request data with Pydantic
-- Store data in SQLite through SQLAlchemy ORM
-- Filter expenses by category and date range
-- Paginate the expense list with `limit` and `offset`
-- Calculate monthly spending total and number of expenses
-- Interactive API documentation through Swagger UI
-- Automated API tests using pytest
+- **Expense CRUD:** create, list, retrieve, update, and delete expense records
+- **Input validation:** validate request payloads using Pydantic schemas
+- **Database integration:** persist records in SQLite using SQLAlchemy ORM
+- **Filtering:** filter expenses by category and date range
+- **Pagination:** control list results with `limit` and `offset`
+- **Monthly summary:** calculate total spending and expense count for a selected month
+- **Interactive documentation:** explore and test endpoints through Swagger UI
+- **Automated tests:** API tests written with pytest and HTTPX
 
 ## Tech stack
 
+| Area | Technology |
+|---|---|
+| Language | Python 3.12 |
+| API framework | FastAPI |
+| ORM | SQLAlchemy |
+| Database | SQLite |
+| Validation | Pydantic |
+| Testing | Pytest, HTTPX |
+| API documentation | Swagger UI (OpenAPI) |
+
+## Getting started
+
+### Prerequisites
+
 - Python 3.12
-- FastAPI
-- SQLAlchemy
-- SQLite
-- Pydantic
-- Pytest and HTTPX
+- Git
 
-## Run locally (Windows)
+### Installation (Windows)
 
-1. Install Python 3.12.
-2. Clone this repository and open its folder in Command Prompt.
-3. Create and activate a virtual environment:
+1. Clone the repository:
+
+   ```cmd
+   git clone https://github.com/prateekras/expense-tracker-api.git
+   cd expense-tracker-api
+   ```
+
+2. Create and activate a virtual environment:
 
    ```cmd
    py -3.12 -m venv .venv
-   .venv\Scripts\activate
+   .venv\\Scripts\\activate
    ```
 
-4. Install dependencies:
+3. Install dependencies:
 
    ```cmd
    python -m pip install -r requirements.txt
    ```
 
-5. Start the development server:
+4. Start the development server:
 
    ```cmd
    python -m uvicorn app.main:app --reload
    ```
 
-6. Open **http://127.0.0.1:8000/docs** for interactive API documentation.
+5. Open the interactive API documentation:
 
-The SQLite database file (`expenses.db`) is created automatically in the project folder when the app starts.
+   **http://127.0.0.1:8000/docs**
 
-## API endpoints
+The SQLite database file (`expenses.db`) is created automatically in the project directory when the application starts.
 
-| Method | Endpoint | Purpose |
+## API reference
+
+| Method | Endpoint | Description |
 |---|---|---|
-| GET | `/` | Welcome message |
-| GET | `/health` | Health check |
-| POST | `/expenses` | Create an expense |
-| GET | `/expenses` | List expenses; optional category/date filters and pagination |
-| GET | `/expenses/{expense_id}` | Get one expense |
-| PATCH | `/expenses/{expense_id}` | Update selected fields |
-| DELETE | `/expenses/{expense_id}` | Delete an expense |
-| GET | `/summary/{year}/{month}` | Monthly total and expense count |
+| `GET` | `/` | Welcome message |
+| `GET` | `/health` | Health check |
+| `POST` | `/expenses` | Create an expense |
+| `GET` | `/expenses` | List expenses with optional filters and pagination |
+| `GET` | `/expenses/{expense_id}` | Retrieve one expense |
+| `PATCH` | `/expenses/{expense_id}` | Update selected expense fields |
+| `DELETE` | `/expenses/{expense_id}` | Delete an expense |
+| `GET` | `/summary/{year}/{month}` | Get monthly spending total and expense count |
 
-## Example: create an expense
+### Example: create an expense
 
-Send a `POST /expenses` request with JSON:
+Send a `POST /expenses` request with:
 
 ```json
 {
@@ -78,19 +106,31 @@ Send a `POST /expenses` request with JSON:
 }
 ```
 
-The `spent_on` field is optional; if omitted, today's date is used.
+The `spent_on` field is optional; if omitted, the application uses the current date.
+
+### Example: list expenses
+
+```http
+GET /expenses?category=Food&limit=10&offset=0
+```
+
+### Example: monthly summary
+
+```http
+GET /summary/2026/11
+```
 
 ## Run tests
 
-With the virtual environment active, run:
+With the virtual environment activated, run:
 
 ```cmd
 python -m pytest -q
 ```
 
-**Local test result:** 3 tests passed. One dependency deprecation warning was reported; it did not cause any test failures.
+**Local test result:** 3 tests passed. A dependency deprecation warning was reported, but it did not cause any test failures.
 
-Tests use a separate in-memory SQLite database, so they do not modify your local expense records.
+The tests use a separate in-memory SQLite database and do not modify local expense records.
 
 ## Project structure
 
@@ -109,6 +149,24 @@ expense-tracker-api/
 └── requirements.txt
 ```
 
-## What I learned
+## Key learning outcomes
 
-This project is intended to demonstrate REST conventions, CRUD operations, request validation, database sessions, ORM models, filtering, pagination, aggregation queries and automated endpoint testing.
+- Designing RESTful endpoints and choosing appropriate HTTP methods
+- Structuring a FastAPI application
+- Defining database models and working with SQLAlchemy sessions
+- Validating request and response data with Pydantic
+- Implementing filtering, pagination, and aggregation queries
+- Writing automated API tests and checking response codes
+
+## Future improvements
+
+- Add user registration, authentication, and per-user expense records
+- Add stronger test coverage for validation and error cases
+- Add database migrations
+- Add Docker support and a deployment workflow
+- Add CI checks with GitHub Actions
+
+## Author
+
+**Prateek Rastogi**  
+GitHub: [@prateekras](https://github.com/prateekras)
