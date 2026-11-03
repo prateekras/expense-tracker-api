@@ -17,7 +17,7 @@ A REST API built with **Python, FastAPI, SQLAlchemy and SQLite**. It lets a user
 
 ## Tech stack
 
-- Python 3.10+
+- Python 3.12
 - FastAPI
 - SQLAlchemy
 - SQLite
@@ -26,25 +26,25 @@ A REST API built with **Python, FastAPI, SQLAlchemy and SQLite**. It lets a user
 
 ## Run locally (Windows)
 
-1. Install Python 3.10 or newer.
-2. Clone this repository and open its folder in a terminal.
+1. Install Python 3.12.
+2. Clone this repository and open its folder in Command Prompt.
 3. Create and activate a virtual environment:
 
-   ```powershell
-   py -m venv .venv
+   ```cmd
+   py -3.12 -m venv .venv
    .venv\Scripts\activate
    ```
 
 4. Install dependencies:
 
-   ```powershell
-   pip install -r requirements.txt
+   ```cmd
+   python -m pip install -r requirements.txt
    ```
 
 5. Start the development server:
 
-   ```powershell
-   uvicorn app.main:app --reload
+   ```cmd
+   python -m uvicorn app.main:app --reload
    ```
 
 6. Open **http://127.0.0.1:8000/docs** for interactive API documentation.
@@ -82,11 +82,13 @@ The `spent_on` field is optional; if omitted, today's date is used.
 
 ## Run tests
 
-With the virtual environment active:
+With the virtual environment active, run:
 
-```powershell
-pytest -q
+```cmd
+python -m pytest -q
 ```
+
+**Local test result:** 3 tests passed. One dependency deprecation warning was reported; it did not cause any test failures.
 
 Tests use a separate in-memory SQLite database, so they do not modify your local expense records.
 
